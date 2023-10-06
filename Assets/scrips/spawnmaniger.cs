@@ -7,14 +7,14 @@ public class spawnmaniger : MonoBehaviour
     public float startDelay;
     public float reapetrate;
 
-
+    private playercontoler playercontolerscript;
     public GameObject Obstacleprefab;
     private Vector3 spawnpos = new Vector3 (25, 0, 0);
     // Start is called before the first frame update
     void Start()
     {
         InvokeRepeating("SpawnObstacle", startDelay, reapetrate);
-        
+        playercontolerscript = GameObject.Find("player").GetComponent<playercontoler>();
     }
 
     // Update is called once per frame
@@ -25,6 +25,10 @@ public class spawnmaniger : MonoBehaviour
 
     void SpawnObstacle ()
     {
-        Instantiate(Obstacleprefab, spawnpos, Obstacleprefab.transform.rotation);
+        if(playercontolerscript.gameover == false)
+        {
+            Instantiate(Obstacleprefab, spawnpos, Obstacleprefab.transform.rotation);
+        }
+        
     }
 }

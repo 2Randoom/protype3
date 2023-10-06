@@ -8,6 +8,8 @@ public class playercontoler : MonoBehaviour
     public float jumpforce = 10f;
     public float gravitymodifier;
     public bool isonground = true;
+    public bool gameover;
+
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +31,15 @@ public class playercontoler : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        isonground=true;
+       
 
+        if (collision.gameObject.CompareTag("ground"))
+        {
+            isonground = true;
+        }else if (collision.gameObject.CompareTag("obsticle"))
+        {
+            Debug.Log("Gameover");
+            gameover = true;
+        }
     }
 }
