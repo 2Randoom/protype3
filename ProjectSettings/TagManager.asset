@@ -6,6 +6,7 @@ TagManager:
   tags:
   - ground
   - obsticle
+  - Ground
   layers:
   - Default
   - TransparentFX

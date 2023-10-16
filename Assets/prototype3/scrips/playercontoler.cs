@@ -10,11 +10,20 @@ public class playercontoler : MonoBehaviour
     public float gravitymodifier;
     public bool isonground = true;
     public bool gameover;
+    //particles
+    public ParticleSystem exsplostion;
+    public ParticleSystem dirtsplashparticle;
+    //sound effects
+    public AudioClip jumpsound;
+    public AudioClip crashsound;
+    private AudioSource playerAudio;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
+        playerAudio = GetComponent<AudioSource>();
         playerRb = GetComponent<Rigidbody>();
         playerAm = GetComponent<Animator>();
         Physics.gravity *= gravitymodifier;
@@ -28,6 +37,8 @@ public class playercontoler : MonoBehaviour
             playerRb.AddForce(Vector3.up * jumpforce,ForceMode.Impulse);
             isonground = false;
             playerAm.SetTrigger("Jump_trig");
+            dirtsplashparticle.Stop();
+            playerAudio.PlayOneShot(jumpsound, 1.0f);
         }
     }
 
@@ -43,8 +54,12 @@ public class playercontoler : MonoBehaviour
         {
             Debug.Log("Gameover");
             gameover = true;
+            dirtsplashparticle.Play();
             playerAm.SetBool("Death_b", true);
             playerAm.SetInteger("DeathType_int", 1);
+            exsplostion.Play();
+            dirtsplashparticle.Stop();
+            playerAudio.PlayOneShot(crashsound, 1.0f);
         }
     }
 }

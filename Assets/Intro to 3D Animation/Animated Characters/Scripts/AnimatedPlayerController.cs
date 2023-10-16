@@ -20,13 +20,18 @@ public class AnimatedPlayerController : MonoBehaviour
     //animation Vareables
     private Animator animator;
 
+    //particles
+    public ParticleSystem dustcload;
+
     // Start is called before the first frame update
     void Start()
     {
         //Get Components
         rb = GetComponent<Rigidbody>();
 
-        animator = GetComponent<Animator>();    
+        animator = GetComponent<Animator>();
+        //stop the dustcload when the game starts
+        dustcload.Stop();
     }
 
     // Update is called once per frame
@@ -35,6 +40,16 @@ public class AnimatedPlayerController : MonoBehaviour
         //Forward and Backward Movement
         verticalInput = Input.GetAxis("Vertical");
         transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed * verticalInput);
+
+        //acivate or deactiveat the dustcloat 
+        if(verticalInput > 0 && !dustcload.isPlaying )
+        {
+            dustcload.Play();
+        }
+        else if (verticalInput <= 0) 
+        {
+            dustcload.Stop();
+        }
 
 
         //activate run or idle animation
